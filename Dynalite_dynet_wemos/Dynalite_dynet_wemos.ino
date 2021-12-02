@@ -2,14 +2,14 @@
 #include <PubSubClient.h>
 #include <SoftwareSerial.h>
 
-const char *ssid = "LKIBIZ";
-const char *password = "lkibiz2019";
-const char *MQTT_SERVER = "192.168.10.172";
+const char *ssid = "..........";
+const char *password = "........";
+const char *MQTT_SERVER = ".........";
 const char *MQTT_TOPIC = "tele/away/state";
 
 const char *MQTT_CLIENT_ID = "esp_02";
-const char *MQTT_USERNAME = "laviz";
-const char *MQTT_PASSWORD = "laviz810";
+const char *MQTT_USERNAME = "";
+const char *MQTT_PASSWORD = "";
 
 #define DirectionControl D6
 #define relay D2
@@ -23,11 +23,12 @@ int len = 0;
 
 void setup_wifi()
 {
-  pinMode(D4, OUTPUT); //WiFi Indicator
+  pinMode(D4, OUTPUT); // WiFi Indicator
   Serial.print("Connecting To: ");
   Serial.println(ssid);
   WiFi.begin(ssid, password);
-  while (WiFi.status() != WL_CONNECTED) {
+  while (WiFi.status() != WL_CONNECTED)
+  {
     digitalWrite(D4, HIGH);
     delay(50);
     digitalWrite(D4, LOW);
@@ -68,7 +69,7 @@ void setupSerial()
 
   pinMode(DirectionControl, OUTPUT);
 
-  digitalWrite(DirectionControl, LOW); //preparing for receiption
+  digitalWrite(DirectionControl, LOW); // preparing for receiption
   len = 0;
 }
 
