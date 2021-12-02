@@ -24,7 +24,7 @@ Philips Dynalite communication With Esp-8266 MQTT protocol
 
 # Home Assistant Setup (Example)
 
-Under covers in HA, use this config Philips dynalite (Connect To PDEG)
+Under covers in HA, use this config Philips Dynalite (Connect To PDEG)
 
 ```
 dynalite:
