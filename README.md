@@ -21,3 +21,69 @@ Philips Dynalite communication With Esp-8266 MQTT protocol
 - Rf Transmitter 433 Mhz (https://digiwarestore.com/id/transmiter/rf-transmitter-module-433-mhz-432001.html?search_query=rf+module&results=37)
 - Mini Psu Hi-Link 220VAC -> 5VDC
 - Led 5mm (indicator)
+
+# Home Assistant Setup (Example)
+
+Under covers in HA, use this config Philips dynalite (Connect To PDEG)
+
+```
+dynalite:
+  bridges:
+    - host: 192.168.10.150
+      port: 50000
+      autodiscover: true
+      polltimer: 1
+      area:
+        "10":
+          name: Master Bedroom
+          template: room
+          nodefault: true
+          room_on: 1
+          room_off: 2
+          preset:
+            "3":
+              name: Relax
+              fade: 5.0
+            "4":
+              name: Night Mode
+              fade: 5.0
+            "5":
+              name: Morning
+              fade: 5.0
+            "6":
+              name: Cloud Day Light
+              fade: 5.0
+        "11":
+          name: Curtain Control
+          template: room
+          nodefault: true
+          room_on: 1
+          room_off: 2
+
+```
+
+Under covers in HA, use this config MQTT
+
+```
+mqtt:
+  broker: "Your IP Broker/server"
+  port: Your port MQTT
+  username: "Your username"
+  password: Your password
+
+switch:
+  - platform: mqtt
+    name: "General Lamp"
+    state_topic: "switch/bedroom1/1/state"
+    command_topic: "switch/1/command"
+    payload_on: "1"
+    payload_off: "0"
+
+ switch:
+  - platform: mqtt
+    name: "Cove Lighting"
+    state_topic: "switch/bedroom1/2/state"
+    command_topic: "switch/2/command"
+    payload_on: "1"
+    payload_off: "0"
+```
