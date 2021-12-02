@@ -3,15 +3,15 @@
 #include <WiFiManager.h>
 #include <Ticker.h>
 
-const char *MQTT_SERVER = "192.168.10.107";
+const char *MQTT_SERVER = "xxx.xxx.xxx.xxx";
 const char *MQTT_TOPIC_RELAY = "home/main/switch/state";
 const char *MQTT_TOPIC_HOME_STATUS = "home/main/away/state";
 const char *MQTT_STATUS = "home/main/status";
 const char *SWITCH1 = "home/main/switch/command";
 
 const char *MQTT_CLIENT_ID = "esp8266-main-switch";
-const char *MQTT_USERNAME = "admin";
-const char *MQTT_PASSWORD = "admin";
+const char *MQTT_USERNAME = "..........";
+const char *MQTT_PASSWORD = "..........";
 
 WiFiClient espClient;
 PubSubClient client(espClient);
@@ -22,7 +22,7 @@ Ticker ticker;
 
 void tick()
 {
-  //toggle state
+  // toggle state
   digitalWrite(2, !digitalRead(2)); // set pin GPIO2 Led Wemos On-board
 }
 
@@ -30,9 +30,9 @@ void configModeCallback(WiFiManager *myWiFiManager)
 {
   Serial.println("Entered config mode");
   Serial.println(WiFi.softAPIP());
-  //if you used auto generated SSID, print it
+  // if you used auto generated SSID, print it
   Serial.println(myWiFiManager->getConfigPortalSSID());
-  //entered config mode, make led toggle faster
+  // entered config mode, make led toggle faster
   ticker.attach(0.2, tick);
 }
 
@@ -75,12 +75,14 @@ void callback(char *topic, byte *message, unsigned int length)
 
   if (String(topic) == SWITCH1)
   {
-    if (messageTemp == "1") {
+    if (messageTemp == "1")
+    {
       digitalWrite(mainRelay, HIGH);
       client.publish(MQTT_TOPIC_RELAY, "1");
       client.publish(MQTT_TOPIC_HOME_STATUS, "1");
     }
-    else if (messageTemp == "0") {
+    else if (messageTemp == "0")
+    {
       digitalWrite(mainRelay, LOW);
       client.publish(MQTT_TOPIC_RELAY, "0");
       client.publish(MQTT_TOPIC_HOME_STATUS, "0");
@@ -98,7 +100,7 @@ void reconnect()
     if (client.connect(MQTT_CLIENT_ID, MQTT_USERNAME, MQTT_PASSWORD, MQTT_STATUS, 1, 1, "Offline"))
     {
       Serial.println("connected");
-      //subscribe
+      // subscribe
       client.subscribe(SWITCH1);
       client.publish(MQTT_STATUS, "Online", true);
     }
@@ -123,7 +125,7 @@ void setup()
   client.setServer(MQTT_SERVER, 1883);
   client.setCallback(callback);
 
-  pinMode(2, OUTPUT); //WiFi Indicator
+  pinMode(2, OUTPUT); // WiFi Indicator
   pinMode(mainRelay, OUTPUT);
 }
 
