@@ -70,20 +70,12 @@ mqtt:
   port: Your port MQTT
   username: "Your username"
   password: Your password
-
-switch:
+  
+binary_sensor:
   - platform: mqtt
-    name: "General Lamp"
-    state_topic: "switch/bedroom1/1/state"
-    command_topic: "switch/1/command"
-    payload_on: "1"
-    payload_off: "0"
-
- switch:
-  - platform: mqtt
-    name: "Cove Lighting"
-    state_topic: "switch/bedroom1/2/state"
-    command_topic: "switch/2/command"
-    payload_on: "1"
-    payload_off: "0"
+    name: Away Status
+    state_topic: "home/away/state"
+    payload_on: 1
+    payload_off: 0
+    device_class: presence
 ```
