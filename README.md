@@ -1,7 +1,7 @@
-# Philips-Dynalite-Esp8266---Mqtt-
+# Philips-Dynalite-Esp8266
 Philips Dynalite communication With Esp-8266 MQTT protocol
 
-#Dynalite-ESP8266 RS485 Interface (List Item)
+# Dynalite-ESP8266 RS485 Interface (List Item)
 
 - Esp8266 (Wemos D1 Mini)
 - RS485 Interface
