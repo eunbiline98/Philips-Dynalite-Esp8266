@@ -79,3 +79,71 @@ binary_sensor:
     payload_off: 0
     device_class: presence
 ```
+
+example task philips dynalite
+
+```
+Task1()
+{
+	Name="Welcome Mode"
+	dynet(0x1c,200, 4, 0,0,0,0xff)
+	//Living Room Channel
+	ChannelLevel(A=11,C=2,F=3,L=100)
+	ChannelLevel(A=11,C=3,F=3,L=100)
+	ChannelLevel(A=11,C=4,F=3,L=100)
+	//Kitchen & Dining Channel
+	ChannelLevel(A=12,C=5,F=3,L=100)
+	//Master Bedroom channel
+	Channellevel(A=13,C=6,F=3,L=30)
+	ChannelLevel(A=13,C=7,F=3,L=30)
+	ChannelLevel(A=13,C=8,F=3,L=30)
+	LedOnOff(0x87,0x0C,0x00,0x00)			//Turn On [ 1 ] And Turn Off [ 2 3 4 5 6 ]
+
+}
+
+Task2()
+{
+	Name="Away Mode"
+	LedOnOff(0x0F,0x48,0x00,0x00)			//Turn On [ 6 ] And Turn Off [ 1 2 3 4 5 ]
+	delay(5)
+	dynet(0x1c,200, 5, 0,0,0,0xff)
+	//foyer Channel
+	ChannelLevel(A=10,C=1,L=20)
+	//Living Room Channel
+	ChannelLevel(A=11,C=2,F=5,L=0)
+	ChannelLevel(A=11,C=3,F=5,L=0)
+	ChannelLevel(A=11,C=4,F=5,L=0)
+	//Kitchen & Dining Channel
+	ChannelLevel(A=12,C=5,F=5,L=0)
+	//Master Bedroom channel
+	Channellevel(A=13,C=6,F=5,L=0)
+	ChannelLevel(A=13,C=7,F=5,L=0)
+	ChannelLevel(A=13,C=8,F=5,L=0)
+}
+
+
+```
+example get hex code dynet (Arduino Code)
+
+```
+
+void readData() {
+  if (rs485_dynet.available()) {
+    byte rx = rs485_dynet.read(); // read byte
+    data[len] = rx;
+    len++;
+  }
+  if (len > 7) {
+    Serial.print("Data From DyNet : ");
+    for (int i = 0; i < len; i++) {
+      Serial.print(data[i]);
+      Serial.print(",");
+    }
+    Serial.println("");
+    len = 0;
+  }
+}
+
+```
+
+
